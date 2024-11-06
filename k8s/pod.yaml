@@ -8,5 +8,3 @@ spec:
   containers:
     - name: goserver
       image: md91/hello-go
-      ports:
-        - containerPort: 8080

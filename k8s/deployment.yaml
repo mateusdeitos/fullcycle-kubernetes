@@ -17,4 +17,4 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: md91/hello-go:latest
+          image: md91/hello-go:v2

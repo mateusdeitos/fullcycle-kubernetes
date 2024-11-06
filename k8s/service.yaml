@@ -5,7 +5,7 @@ metadata:
 spec:
   selector: # filter pods of a deployment based on labels
     app: goserver
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name: goserver-service
       protocol: TCP

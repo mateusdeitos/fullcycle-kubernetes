@@ -17,7 +17,16 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: md91/hello-go:v6
+          image: md91/hello-go:v7
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000 #container port
+            periodSeconds: 5 # how often to probe
+            failureThreshold: 1 # how many consecutive probes before failure
+            timeoutSeconds: 10 # how long to wait before timeout (each timeout will be considered a failure)
+            successThreshold: 1 # how many consecutive successes before success
+
           envFrom:
             - configMapRef:
                 name: goserver-env

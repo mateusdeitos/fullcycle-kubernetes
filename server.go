@@ -5,9 +5,13 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
+var startedAt = time.Now()
+
 func main() {
+	http.HandleFunc("/health", health)
 	http.HandleFunc("/secret", secret)
 	http.HandleFunc("/configmap", ConfigMap)
 	http.HandleFunc("/", hello)
@@ -19,6 +23,17 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	name := os.Getenv("NAME")
 	age := os.Getenv("AGE")
 	w.Write([]byte(fmt.Sprintf("Hello, %s. I am %s years old.", name, age)))
+}
+
+func health(w http.ResponseWriter, r *http.Request) {
+	d := time.Since(startedAt)
+	if d.Seconds() > 25 {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(fmt.Sprintf("Duration: %v", d.String())))
+	} else {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("UP"))
+	}
 }
 
 func secret(w http.ResponseWriter, r *http.Request) {

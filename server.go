@@ -27,7 +27,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 
 func health(w http.ResponseWriter, r *http.Request) {
 	d := time.Since(startedAt)
-	if d.Seconds() > 25 {
+	if d.Seconds() < 10 {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(fmt.Sprintf("Duration: %v", d.String())))
 	} else {

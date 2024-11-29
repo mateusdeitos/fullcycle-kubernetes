@@ -44,13 +44,13 @@ spec:
             successThreshold: 1 # how many consecutive successes before success
 
           livenessProbe:
-              httpGet:
-                path: /health
-                port: 8000 #container port
-              periodSeconds: 5 # how often to probe
-              failureThreshold: 1 # how many consecutive probes before failure
-              timeoutSeconds: 10 # how long to wait before timeout (each timeout will be considered a failure)
-              successThreshold: 1 # how many consecutive successes before success 
+            httpGet:
+              path: /health
+              port: 8000 #container port
+            periodSeconds: 5 # how often to probe
+            failureThreshold: 1 # how many consecutive probes before failure
+            timeoutSeconds: 10 # how long to wait before timeout (each timeout will be considered a failure)
+            successThreshold: 1 # how many consecutive successes before success
 
           envFrom:
             - configMapRef:
@@ -63,10 +63,12 @@ spec:
               mountPath: "go/myfamily"
 
       volumes:
+        - name: goserver-pvc
+          persistentVolumeClaim:
+            claimName: goserver-pvc
         - name: config
           configMap:
             name: configmap-family
             items:
               - key: members
                 path: family.txt
-
